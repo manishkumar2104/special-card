@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Message For You 🌸</title>
+
+  <!-- WhatsApp & Social Media Preview Cards (Open Graph Tags) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Special Message For You 💌">
+  <meta property="og:description" content="Aapke liye ek chhota sa dil se likha hua paigam... Tap to open. ✨">
+  <!-- WhatsApp preview ke liye apni photo ka direct URL yahan paste karein -->
+  <meta property="og:image" content="https://coffeeworkz.com/cdn/shop/products/CoffeeWorkz_Gift_Card_Perfect_Gift_for_Coffee_Lovers.jpg?v=1744460152&width=1946">
+
+  <!-- Google Fonts & Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #ffe4e6 0%, #fbcfe8 45%, #f472b6 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-romantic {
+      font-family: 'Dancing Script', cursive;
+    }
+    .envelope-glow {
+      box-shadow: 0 20px 45px -10px rgba(244, 63, 94, 0.45);
+    }
+    .slide-enter {
+      animation: slideIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(22px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .floating-hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .heart-float {
+      position: absolute;
+      color: rgba(244, 63, 94, 0.25);
+      animation: floatUp 8s infinite linear;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.6); opacity: 0; }
+      20% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="relative flex items-center justify-center p-4 selection:bg-rose-200">
+
+  <!-- Floating Background Elements -->
+  <div class="floating-hearts">
+    <span class="heart-float text-3xl" style="left: 10%; animation-delay: 0s;">🌸</span>
+    <span class="heart-float text-2xl" style="left: 28%; animation-delay: 2.5s;">💖</span>
+    <span class="heart-float text-4xl" style="left: 65%; animation-delay: 1.2s;">✨</span>
+    <span class="heart-float text-3xl" style="left: 82%; animation-delay: 3.8s;">🤍</span>
+  </div>
+
+  <!-- Top Controls -->
+  <div class="fixed top-4 left-4 z-50 flex gap-2">
+    <button id="editBtn" class="bg-white/80 backdrop-blur-md text-rose-700 font-medium px-4 py-1.5 rounded-full shadow-md text-xs sm:text-sm hover:bg-white transition flex items-center gap-1.5 border border-rose-200">
+      <span>✏️ Customize Text & Photo</span>
+    </button>
+  </div>
+
+  <!-- Main Container -->
+  <main class="w-full max-w-md z-10 relative">
+
+    <!-- Screen 1: Envelope Intro Screen -->
+    <div id="introScreen" class="flex flex-col items-center justify-center text-center p-4">
+      <div id="envelopeContainer" class="cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95 group">
+        <div class="relative w-72 h-48 bg-rose-50 rounded-2xl envelope-glow border-2 border-rose-200 flex items-center justify-center overflow-hidden">
+          <div class="absolute -top-12 left-0 right-0 h-28 bg-rose-200/60 rotate-45 transform origin-top-left rounded-md"></div>
+          <div class="absolute -top-12 left-0 right-0 h-28 bg-rose-200/60 -rotate-45 transform origin-top-right rounded-md"></div>
+          
+          <div class="relative z-10 flex flex-col items-center gap-2">
+            <span class="text-5xl group-hover:scale-110 transition-transform duration-300 drop-shadow">💌</span>
+            <span class="text-xs uppercase tracking-widest text-rose-500 font-semibold bg-rose-100/80 px-3 py-1 rounded-full">For You</span>
+          </div>
+        </div>
+      </div>
+      
+      <h1 class="mt-8 text-2xl sm:text-3xl font-romantic text-rose-900 tracking-wide">Aapke Liye Ek Chhota Sa Message...</h1>
+      <p class="mt-2 text-rose-800/80 text-sm">Envelope par tap karke open kijiye 🌸</p>
+    </div>
+
+    <!-- Screen 2: Slide by Slide Experience -->
+    <div id="cardScreen" class="hidden">
+      <div id="cardBox" class="bg-white/95 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-rose-100 flex flex-col justify-between min-h-[480px] slide-enter">
+        
+        <!-- Progress Pills -->
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex gap-1.5" id="dotsContainer"></div>
+          <span id="slideIndicator" class="text-xs font-semibold text-rose-400">1 / 5</span>
+        </div>
+
+        <!-- Dynamic Content Area -->
+        <div id="contentArea" class="flex-1 flex flex-col justify-center items-center text-center px-1">
+          <!-- Content injected via JavaScript -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center mt-6 pt-4 border-t border-rose-50">
+          <button id="prevBtn" class="text-xs font-medium text-rose-400 hover:text-rose-700 px-3 py-2 rounded-xl transition disabled:opacity-0 cursor-pointer">
+            ← Peeche
+          </button>
+          <button id="nextBtn" class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-medium text-sm px-6 py-2.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition cursor-pointer flex items-center gap-1.5">
+            <span id="nextBtnText">Aage Padhein</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Edit / Customize Modal -->
+  <div id="editModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-rose-100">
+      <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+        <h3 class="font-bold text-gray-800 text-lg">Card Customize Karein</h3>
+        <button id="closeEditModal" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="mt-4 space-y-4">
+        <!-- Photo Selection -->
+        <div class="p-4 bg-rose-50/60 rounded-2xl border border-rose-100">
+          <label class="block text-xs font-bold text-rose-800 mb-1">Aakhri Slide Ki Photo Upload Karein:</label>
+          <input type="file" id="photoInput" accept="image/*" class="w-full text-xs text-rose-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-rose-500 file:text-white hover:file:bg-rose-600 cursor-pointer">
+          
+          <div class="grid grid-cols-3 gap-2 mt-3 text-[11px] text-gray-600">
+            <div>
+              <label>Zoom (Scale):</label>
+              <input type="range" id="zoomRange" min="1" max="2" step="0.05" value="1.05" class="w-full">
+            </div>
+            <div>
+              <label>Move X (%):</label>
+              <input type="range" id="panXRange" min="0" max="100" value="50" class="w-full">
+            </div>
+            <div>
+              <label>Move Y (%):</label>
+              <input type="range" id="panYRange" min="0" max="100" value="50" class="w-full">
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Texts Inputs -->
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs font-semibold text-gray-700">Slide 1 (Aapki Importance):</label>
+            <textarea id="msg1" rows="2" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 focus:outline-rose-400 mt-1"></textarea>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700">Slide 2 (Aapki Khushi):</label>
+            <textarea id="msg2" rows="2" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 focus:outline-rose-400 mt-1"></textarea>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700">Slide 3 (Strong & Independent):</label>
+            <textarea id="msg3" rows="2" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 focus:outline-rose-400 mt-1"></textarea>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700">Slide 4 (Hamesha Saath Rehne Ka Wada):</label>
+            <textarea id="msg4" rows="2" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 focus:outline-rose-400 mt-1"></textarea>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-700">Final Photo Slide Message:</label>
+            <textarea id="msg5" rows="2" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 focus:outline-rose-400 mt-1"></textarea>
+          </div>
+        </div>
+
+        <button id="saveChangesBtn" class="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-2xl text-sm shadow transition">
+          Save Karein & Preview Dekhein ✨
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    const defaultData = {
+      photo: 'https://coffeeworkz.com/cdn/shop/products/CoffeeWorkz_Gift_Card_Perfect_Gift_for_Coffee_Lovers.jpg?v=1744460152&width=1946',
+      zoom: 1.05,
+      panX: 50,
+      panY: 50,
+      slides: [
+        {
+          tag: 'Khaas Paigam 💌',
+          title: 'Meri Zindagi Ka Sabse Haseen Hissa...',
+          message: 'Aap meri life me kitni important hain, ise shabdon me bayan karna mushkil hai. Aapke aane se meri duniya me ek alag hi noor aur sukoon aa gaya hai.'
+        },
+        {
+          tag: 'Aapki Muskaan ✨',
+          title: 'Aapke Saath Har Ek Pal Khubsurat Hai...',
+          message: 'Jab aap hasti hain ya paas hoti hain, toh har pareshani chhoti lagne lagti hai. Mai kitna khush hoon aapke saath, ye mera dil hi jaanta hai.'
+        },
+        {
+          tag: 'Admire You 🌸',
+          title: 'Ek Mazboot Aur Independent Shakhsiyat...',
+          message: 'Aap jis tarah se har mushkil ka samna karti hain, aapka hosla aur aapka strong hona mujhe hamesha inspire karta hai. Mujhe aap par beinteha naaz hai.'
+        },
+        {
+          tag: 'Mera Wada 🤝',
+          title: 'Hamesha Aapke Saath Khada Rahunga...',
+          message: 'Chaahe mausam kaisa bhi ho, raahein aasan hon ya kathin—mera hath hamesha aapke hath me hoga. Har kadam par aapka sahara bankar rahunga.'
+        },
+        {
+          tag: 'Always & Forever ❤️',
+          title: 'You Mean The World To Me!',
+          message: 'Thank you meri life ko itna khoobsurat banane ke liye. Stay smiling, always!'
+        }
+      ]
+    };
+
+    let appData = JSON.parse(localStorage.getItem('romantic_card_data')) || defaultData;
+    let currentSlide = 0;
+
+    // DOM Elements
+    const introScreen = document.getElementById('introScreen');
+    const envelopeContainer = document.getElementById('envelopeContainer');
+    const cardScreen = document.getElementById('cardScreen');
+    const contentArea = document.getElementById('contentArea');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const nextBtnText = document.getElementById('nextBtnText');
+    const dotsContainer = document.getElementById('dotsContainer');
+    const slideIndicator = document.getElementById('slideIndicator');
+
+    // Soft chime sound
+    function playChime() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+      } catch(e) {}
+    }
+
+    // Render Slide
+    function renderSlide(index) {
+      slideIndicator.textContent = `${index + 1} / ${appData.slides.length}`;
+      prevBtn.disabled = index === 0;
+
+      // Update Dots
+      dotsContainer.innerHTML = '';
+      appData.slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `h-1.5 rounded-full transition-all duration-300 ${i === index ? 'w-6 bg-rose-500' : 'w-2 bg-rose-200'}`;
+        dotsContainer.appendChild(dot);
+      });
+
+      if (index === appData.slides.length - 1) {
+        nextBtnText.textContent = 'Khush Rahiye ❤️';
+        // Final Slide with Photo
+        contentArea.innerHTML = `
+          <div class="slide-enter flex flex-col items-center">
+            <div class="relative w-48 h-56 sm:w-56 sm:h-64 rounded-2xl overflow-hidden shadow-xl border-4 border-rose-200 mb-4 bg-rose-100">
+              <img src="${appData.photo}" alt="Special Photo" 
+                style="transform: scale(${appData.zoom}); object-position: ${appData.panX}% ${appData.panY}%;" 
+                class="w-full h-full object-cover transition duration-300">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+              <span class="absolute bottom-2 left-3 text-white text-xs font-medium">For My Favorite Person 🌸</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-romantic font-bold text-rose-900">${appData.slides[index].title}</h2>
+            <p class="text-xs sm:text-sm text-gray-700 mt-2 font-medium leading-relaxed max-w-xs">${appData.slides[index].message}</p>
+          </div>
+        `;
+        confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 } });
+      } else {
+        nextBtnText.textContent = 'Aage Padhein';
+        const slide = appData.slides[index];
+        contentArea.innerHTML = `
+          <div class="slide-enter flex flex-col items-center">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-rose-500 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full mb-3">${slide.tag}</span>
+            <h2 class="text-xl sm:text-2xl font-romantic font-bold text-rose-900 mb-3">${slide.title}</h2>
+            <div class="w-10 h-0.5 bg-rose-300 rounded mb-4"></div>
+            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed max-w-xs font-normal">${slide.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    // Open Envelope Action
+    function openLetter() {
+      playChime();
+      introScreen.classList.add('transition-opacity', 'duration-500', 'opacity-0');
+      setTimeout(() => {
+        introScreen.classList.add('hidden');
+        cardScreen.classList.remove('hidden');
+        renderSlide(0);
+      }, 400);
+    }
+
+    envelopeContainer.addEventListener('click', openLetter);
+
+    // Nav actions
+    nextBtn.addEventListener('click', () => {
+      playChime();
+      if (currentSlide < appData.slides.length - 1) {
+        currentSlide++;
+        renderSlide(currentSlide);
+      } else {
+        confetti({ particleCount: 100, spread: 100, origin: { y: 0.6 } });
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      playChime();
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderSlide(currentSlide);
+      }
+    });
+
+    // Customizer Modal Logic
+    const editBtn = document.getElementById('editBtn');
+    const editModal = document.getElementById('editModal');
+    const closeEditModal = document.getElementById('closeEditModal');
+    const saveChangesBtn = document.getElementById('saveChangesBtn');
+
+    editBtn.addEventListener('click', () => {
+      document.getElementById('msg1').value = appData.slides[0].message;
+      document.getElementById('msg2').value = appData.slides[1].message;
+      document.getElementById('msg3').value = appData.slides[2].message;
+      document.getElementById('msg4').value = appData.slides[3].message;
+      document.getElementById('msg5').value = appData.slides[4].message;
+      document.getElementById('zoomRange').value = appData.zoom;
+      document.getElementById('panXRange').value = appData.panX;
+      document.getElementById('panYRange').value = appData.panY;
+      editModal.classList.remove('hidden');
+    });
+
+    closeEditModal.addEventListener('click', () => editModal.classList.add('hidden'));
+
+    document.getElementById('photoInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          appData.photo = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    saveChangesBtn.addEventListener('click', () => {
+      appData.slides[0].message = document.getElementById('msg1').value;
+      appData.slides[1].message = document.getElementById('msg2').value;
+      appData.slides[2].message = document.getElementById('msg3').value;
+      appData.slides[3].message = document.getElementById('msg4').value;
+      appData.slides[4].message = document.getElementById('msg5').value;
+      appData.zoom = document.getElementById('zoomRange').value;
+      appData.panX = document.getElementById('panXRange').value;
+      appData.panY = document.getElementById('panYRange').value;
+
+      localStorage.setItem('romantic_card_data', JSON.stringify(appData));
+      editModal.classList.add('hidden');
+      if (!cardScreen.classList.contains('hidden')) {
+        renderSlide(currentSlide);
+      }
+    });
+  </script>
+</body>
+</html>
